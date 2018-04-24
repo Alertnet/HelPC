@@ -6,6 +6,94 @@ if (!isLogin()) die ('You have not log on');
   mysql_connect($HOST, $USER, $PASS) or die ("Не могу создать соединение"); //устанавливаем соединение с хостом, если не получилось завершаем скрипт с ошибкой
   mysql_select_db($DB) or die (mysql_error().' вот такая херня');  			//Выбор базы данных или завершение скрипта
 
+class Request
+{
+  protected $requests_mastersID    = "";
+  protected $requests_name         = "";
+  protected $requests_description  = "";
+  protected $requests_category     = "";
+  protected $requests_clientsID    = "";
+  protected $clients_name          = "";
+  protected $clients_description   = "";
+  protected $requests_cost         = "";
+  protected $requests_time_left    = "";
+  protected $clients_address       = "";
+
+  function __construct($requests_name, $requests_description, $requests_category, $requests_clientsID, $requests_cost, $requests_time, $clients_telephone, $clients_name, $clients_address, $clients_description, $requests_mastersID)
+  {
+    $this->requests_mastersID     = $requests_mastersID;
+    $this->requests_name          = $requests_name;
+    $this->requests_description   = $requests_description;
+    $this->requests_category      = $requests_category;
+    if ($this->requests_mastersID == $_SESSION['login']){
+      $this->requests_clientsID     = $requests_clientsID;
+      $this->clients_name           = $clients_name;
+      $this->clients_description    = $clients_description;
+      $this->clients_telephone      = $clients_telephone;
+    }
+    $this->requests_cost          = $requests_cost;
+    $this->requests_time_left     = (int)(($requests_time - time())/60/60)." часов ".(($requests_time - time())/60%60)." минут";
+    $this->clients_address        = $clients_address;
+  }
+
+  function print_request (){
+    if ($this->requests_mastersID != $_SESSION['login']){
+    echo '
+    <div class="col-12 mb-3 '.$this->requests_category.'">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
+          </div><span class="h4">
+            <div class="badge badge-warning">'.$this->requests_cost.'</div></span>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">'.$this->requests_name.'</h5>
+          <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">'.$this->clients_address.'</small></p>
+          <div class="mb-3">
+            <ul class="list-group">
+              <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
+                <div class="collapse" id="bid-actions-0">
+                  <hr>
+                  <div>'.$this->requests_description.'</div>
+                </div>
+              </li>
+            </ul>
+          </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
+        </div>
+      </div>
+    </div>
+    ';}
+    else{
+      echo '
+      <div class="col-12 mb-3 '.$this->requests_category.'">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
+            </div><span class="h4">
+              <div class="badge badge-warning">'.$this->requests_cost.'</div></span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">'.$this->requests_name.'</h5>
+            <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">'.$this->clients_address.' '.$this->clients_description.'</small></p>
+            <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">'.$this->clients_name.' '.$this->clients_telephone.'</small></p>
+            <div class="mb-3">
+              <ul class="list-group">
+                <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
+                  <div class="collapse" id="bid-actions-0">
+                    <hr>
+                    <div>'.$this->requests_description.'</div>
+                  </div>
+                </li>
+              </ul>
+            </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
+          </div>
+        </div>
+      </div>
+      ';}
+  }
+}
+
+
 function get_category ($number){
     $str = (string)$number;
     $categories = "";
@@ -36,7 +124,7 @@ function get_category ($number){
     echo 'server erorr';
   }
 
-  $query = "SELECT `requests_name`, `requests_description`, `requests_category`, `requests_clientsID`, `requests_cost`, `requests_time`, `clients_telephone`,	`clients_name`,	`clients_address`, `clients_description`  FROM `requests` LEFT JOIN `clients` ON (requests_clientsID = clients_telephone) WHERE `requests_mastersID`=".$_SESSION['login']." OR `requests_mastersID`=0";
+  $query = "SELECT `requests_name`, `requests_description`, `requests_category`, `requests_clientsID`, `requests_cost`, `requests_time`, `clients_telephone`,	`clients_name`,	`clients_address`, `clients_description`, `requests_mastersID`  FROM `requests` LEFT JOIN `clients` ON (requests_clientsID = clients_telephone) WHERE `requests_mastersID`=".$_SESSION['login']." OR `requests_mastersID`=0";
   $result = mysql_query($query) or die("Ошибка " . mysql_error());
   if($result)
   {
@@ -44,6 +132,7 @@ function get_category ($number){
     if (count($rows)>0)
     {
           $row = mysql_fetch_row($result);
+          $requests = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10]);
           $requests_name = $row[0];
           $requests_description = $row[1];
           $requests_category = get_category($row[2]);
@@ -62,14 +151,6 @@ function get_category ($number){
   }
   mysql_free_result($result);
   mysql_close();
-
-  //echo $requests_name;
-  //echo $requests_description;
-  //echo $requests_category;
-  //echo $requests_clientsID;
-  //echo $requests_cost;
-
-
  ?>
 
 <!DOCTYPE html>
@@ -145,29 +226,7 @@ function get_category ($number){
         <section class="col-md-8 py-3">
           <div class="row no-gutters">
 
-            <div class="col-12 mb-3 <?php echo $requests_category; ?>">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось <?php echo $requests_time_left; ?></small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning"><?php echo $requests_cost; ?></div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo $requests_name; ?></h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle"><?php echo $clients_address; ?></small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-0">
-                          <hr>
-                          <div><?php $requests_description; ?></div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
+            <?php $requests->print_request(); ?>
 
             <div class="col-12 mb-3">
               <div class="card">
