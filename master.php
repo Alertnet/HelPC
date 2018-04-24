@@ -39,7 +39,7 @@ class Request
   function print_request (){
     if ($this->requests_mastersID != $_SESSION['login']){
     echo '
-    <div class="col-12 mb-3 '.$this->requests_category.'">
+    <div class="col-12 mb-3 '.get_category($this->requests_category).'">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
@@ -65,7 +65,7 @@ class Request
     ';}
     else{
       echo '
-      <div class="col-12 mb-3 '.$this->requests_category.'">
+      <div class="col-12 mb-3 '.get_category($this->requests_category).'">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
@@ -85,7 +85,7 @@ class Request
                   </div>
                 </li>
               </ul>
-            </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
+            </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Отказаться</a>
           </div>
         </div>
       </div>
@@ -102,6 +102,13 @@ function get_category ($number){
     if ($str[2] == "1") $categories = $categories." network_request";
     if ($categories == "") $categories = "other_request";
     return $categories;
+}
+
+function sortByUpCost($f1, $f2)
+{
+  if($f1->requests_cost < $f2->requests_cost) return -1;
+  elseif($f1->requests_cost > $f2->requests_cost) return 1;
+  else return 0;
 }
 
   $query = "SELECT `masters_balance`, `masters_img`, `masters_rating`, `masters_quantity`, `masters_name`, `masters_surename` FROM `masters` WHERE masters_log=".$_SESSION['login'];
@@ -131,19 +138,11 @@ function get_category ($number){
     $rows = mysql_num_rows($result);
     if (count($rows)>0)
     {
-          $row = mysql_fetch_row($result);
-          $requests = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10]);
-          $requests_name = $row[0];
-          $requests_description = $row[1];
-          $requests_category = get_category($row[2]);
-          $requests_clientsID = $row[3];
-          $requests_cost = $row[4];
-          $requests_time_left = (int)(($row[5] - time())/60/60)." часов ".(($row[5] - time())/60%60)." минут";
-          $clients_telephone = $row[6];
-          $clients_name = $row[7];
-          $clients_address = $row[8];
-          $clients_description = $row[9];
-
+      $requests=[];
+      for ($i=0; $i < $rows; $i++) {
+        $row = mysql_fetch_row($result);
+        $requests[i] = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10]);
+      }
     }
   }
   else {
@@ -190,7 +189,8 @@ function get_category ($number){
                   <select class="custom-select">
                     <option>Стоимость &uarr;</option>
                     <option>Стоимость &darr;</option>
-                    <option selected>Горящие заявки</option>
+                    <option selected>Осталось времени &darr;</option>
+                    <option>Осталось времени &uarr;</option>
                   </select>
                 </div>
                 <h5 class="card-title">Виды работ</h5>
@@ -226,7 +226,12 @@ function get_category ($number){
         <section class="col-md-8 py-3">
           <div class="row no-gutters">
 
-            <?php $requests->print_request(); ?>
+            <?php
+              uasort($requests,"sortByUpCost");
+              for ($i=0; $i < count($requests); $i++) {
+                $requests[i]->print_request();
+              }
+              ?>
 
             <div class="col-12 mb-3">
               <div class="card">
