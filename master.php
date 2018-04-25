@@ -1,11 +1,20 @@
-<?php
+        <?php
 require_once './cfg.php';
 require_once './gl_fun.php';
 session_start();
 if (!isLogin()) die ('You have not log on');
   mysql_connect($HOST, $USER, $PASS) or die ("Не могу создать соединение"); //устанавливаем соединение с хостом, если не получилось завершаем скрипт с ошибкой
-  mysql_select_db($DB) or die (mysql_error().' вот такая херня');  			//Выбор базы данных или завершение скрипта
-
+  mysql_select_db($DB) or die (mysql_error().' вот такая херня');  		     	//Выбор базы данных или завершение скрипта
+if (isset($_GET["page"])) {$page = $_GET["page"];}
+else {$page = "1";}
+if (isset($_GET["sort"])) {$sort = $_GET["sort"];}
+else {
+  $sort = "";
+}
+if (isset($_GET["own"]))  {$own  = (int)$_GET["own"];}
+else {
+  $own = 0;
+}
 class Request
 {
   protected $requests_mastersID    = "";
@@ -34,6 +43,15 @@ class Request
     $this->requests_cost          = $requests_cost;
     $this->requests_time_left     = (int)(($requests_time - time())/60/60)." часов ".(($requests_time - time())/60%60)." минут";
     $this->clients_address        = $clients_address;
+  }
+
+  function isOwn (){
+    if ($this->requests_mastersID == $_SESSION['login']) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
   }
 
   function print_request (){
@@ -108,6 +126,24 @@ function sortByUpCost($f1, $f2)
 {
   if($f1->requests_cost < $f2->requests_cost) return -1;
   elseif($f1->requests_cost > $f2->requests_cost) return 1;
+  else return 0;
+}
+function sortByDownCost($f1, $f2)
+{
+  if($f1->requests_cost > $f2->requests_cost) return -1;
+  elseif($f1->requests_cost < $f2->requests_cost) return 1;
+  else return 0;
+}
+function sortByUpTime($f1, $f2)
+{
+  if($f1->requests_time_left < $f2->requests_time_left) return -1;
+  elseif($f1->requests_time_left > $f2->requests_time_left) return 1;
+  else return 0;
+}
+function sortByDownTime($f1, $f2)
+{
+  if($f1->requests_time_left < $f2->requests_time_left) return -1;
+  elseif($f1->requests_time_left > $f2->requests_time_left) return 1;
   else return 0;
 }
 
@@ -215,7 +251,7 @@ function sortByUpCost($f1, $f2)
                 <div class="form-group">
                   <div class="custom-control custom-checkbox" checked="true">
                     <input class="custom-control-input" type="checkbox" id="myRequests"/>
-                    <label class="custom-control-label" for="myRequests">Мои заявки</label>
+                    <label class="custom-control-label" for="myRequests">Только мои заявки</label>
                   </div>
                 </div>
                 <button class="btn btn-outline-primary btn-block">Показать</button>
@@ -227,11 +263,42 @@ function sortByUpCost($f1, $f2)
           <div class="row no-gutters">
 
             <?php
-              uasort($requests,"sortByUpCost");
-              for ($i=0; $i < count($requests); $i++) {
-                $requests[i]->print_request();
+              $requestsFP = [];
+
+              switch ($sort) {
+                case 'sortByUpCost':
+                  uasort($requests,"sortByUpCost");
+                  break;
+                case 'sortByDownCost':
+                  uasort($requests,"sortByDownCost");
+                  break;
+                case 'sortByUpTime':
+                  uasort($requests,"sortByUpTime");
+                  break;
+                case 'sortByDownTSime':
+                  uasort($requests,"sortByDownTSime");
+                  break;
+                default:
+                  break;
               }
-              ?>
+
+              if ($own == 1) {
+                for ($i=0; $i < count($requests); $i++) {
+                  if ($requests[i].isOwn()){
+                    $requestsFP.push($requests[i]);
+                  }
+                }
+              }
+              else {
+                $requestsFP = $requests;
+              }
+              $to = ((int)$page)*10;
+              $from = $to-10;
+              for ($i=$from; $i < $to; $i++) {
+                if ($i < count($requestsFP))
+                {$requestsFP[i]->print_request();}
+              }
+            ?>
 
             <div class="col-12 mb-3">
               <div class="card">
@@ -476,14 +543,18 @@ function sortByUpCost($f1, $f2)
             <nav class="w-100 d-block">
               <ul class="pagination justify-content-center">
                 <li class="page-item disabled"><a class="page-link" href="#"><span>«</span></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">&hellip;</a></li>
-                <li class="page-item"><a class="page-link" href="#">26</a></li>
-                <li class="page-item"><a class="page-link" href="#"><span>»</span></a></li>
+                <?php
+                  $countOfPages = count($requests)/10;
+                  for ($i=1; $i < $countOfPages+1; $i++) {
+                    if ($i==$page) {
+                      echo '<li class="page-item active"><a class="page-link" href="master.php?own='.$_GET['own'].'&sort='.$_GET['sort'].'&page='.$i.'">'.$i.'</a></li>';
+                    }
+                    else {
+                      echo '<li class="page-item active"><a class="page-link" href="master.php?own='.$_GET['own'].'&sort='.$_GET['sort'].'&page='.$i.'">'.$i.'</a></li>';
+                    }
+                  }
+                ?>
+                <li class="page-item disabled"><a class="page-link" href="#"><span>»</span></a></li>
               </ul>
             </nav>
           </div>
