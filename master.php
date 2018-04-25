@@ -11,22 +11,22 @@ if (isset($_GET["sort"])) {$sort = $_GET["sort"];}
 else {
   $sort = "";
 }
-if (isset($_GET["own"]))  {$own  = (int)$_GET["own"];}
+if (isset($_GET["own"]))  {$own  = $_GET["own"];}
 else {
-  $own = 0;
+  $own = 'off';
 }
 class Request
 {
-  protected $requests_mastersID    = "";
-  protected $requests_name         = "";
-  protected $requests_description  = "";
-  protected $requests_category     = "";
-  protected $requests_clientsID    = "";
-  protected $clients_name          = "";
-  protected $clients_description   = "";
-  protected $requests_cost         = "";
-  protected $requests_time_left    = "";
-  protected $clients_address       = "";
+  public $requests_mastersID    = "";
+  public $requests_name         = "";
+  public $requests_description  = "";
+  public $requests_category     = "";
+  public $requests_clientsID    = "";
+  public $clients_name          = "";
+  public $clients_description   = "";
+  public $requests_cost         = "";
+  public $requests_time_left    = "";
+  public $clients_address       = "";
 
   function __construct($requests_name, $requests_description, $requests_category, $requests_clientsID, $requests_cost, $requests_time, $clients_telephone, $clients_name, $clients_address, $clients_description, $requests_mastersID)
   {
@@ -43,15 +43,6 @@ class Request
     $this->requests_cost          = $requests_cost;
     $this->requests_time_left     = (int)(($requests_time - time())/60/60)." часов ".(($requests_time - time())/60%60)." минут";
     $this->clients_address        = $clients_address;
-  }
-
-  function isOwn (){
-    if ($this->requests_mastersID == $_SESSION['login']) {
-      return TRUE;
-    }
-    else {
-      return FALSE;
-    }
   }
 
   function print_request (){
@@ -93,7 +84,7 @@ class Request
           <div class="card-body">
             <h5 class="card-title">'.$this->requests_name.'</h5>
             <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">'.$this->clients_address.' '.$this->clients_description.'</small></p>
-            <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">'.$this->clients_name.' '.$this->clients_telephone.'</small></p>
+            <p class="text-muted"><i class="fa fa-user mr-2"></i><small class="card-subtitle">'.$this->clients_name.' '.$this->clients_telephone.'</small></p>
             <div class="mb-3">
               <ul class="list-group">
                 <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
@@ -219,14 +210,14 @@ function sortByDownTime($f1, $f2)
               <h5 class="mb-0">Настройки<a class="float-right" href="#sort" data-toggle="collapse"><i class="text-secondary fa fa-bars"></i></a></h5>
             </div>
             <div class="card-body border-top collapse" id="sort">
-              <form>
+              <form action="master.php">
                 <h5 class="card-title">Сортировка    </h5>
                 <div class="form-group">
-                  <select class="custom-select">
-                    <option>Стоимость &uarr;</option>
-                    <option>Стоимость &darr;</option>
-                    <option selected>Осталось времени &darr;</option>
-                    <option>Осталось времени &uarr;</option>
+                  <select class="custom-select" name="sort">
+                    <option value="sortByDownCost">Стоимость &uarr;</option>
+                    <option value="sortByUpCost">Стоимость &darr;</option>
+                    <option selected value="sortByUpTime">Осталось времени &darr;</option>
+                    <option value="sortByDownTime">Осталось времени &uarr;</option>
                   </select>
                 </div>
                 <h5 class="card-title">Виды работ</h5>
@@ -250,11 +241,11 @@ function sortByDownTime($f1, $f2)
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="myRequests"/>
+                    <input class="custom-control-input" type="checkbox" name="own" id="myRequests"/>
                     <label class="custom-control-label" for="myRequests">Только мои заявки</label>
                   </div>
                 </div>
-                <button class="btn btn-outline-primary btn-block">Показать</button>
+                <button class="btn btn-outline-primary btn-block" type="submit">Показать</button>
               </form>
             </div>
           </div>
@@ -282,16 +273,16 @@ function sortByDownTime($f1, $f2)
                   break;
               }
 
-              if ($own == 1) {
+              if ($own == 'on') {
                 for ($i=0; $i < count($requests); $i++) {
-                  if ($requests[i].isOwn()){
-                    $requestsFP.push($requests[i]);
-                  }
+                  if ($requestsFP[i]->requests_mastersID==$_SESSION['login'])
+                  {$requestsFP.push($requestsFP[i]);}
                 }
               }
               else {
                 $requestsFP = $requests;
               }
+
               $to = ((int)$page)*10;
               $from = $to-10;
               for ($i=$from; $i < $to; $i++) {
