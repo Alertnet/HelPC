@@ -15,6 +15,10 @@ if (isset($_GET["own"]))  {$own  = $_GET["own"];}
 else {
   $own = 'off';
 }
+if (isset($_GET["category"])) {$category = $_GET["category"];}
+else {
+  $category = "";
+}
 class Request
 {
   public $requests_mastersID    = "";
@@ -168,7 +172,7 @@ function sortByDownTime($f1, $f2)
       $requests=[];
       for ($i=0; $i < $rows; $i++) {
         $row = mysql_fetch_row($result);
-        $requests[i] = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10]);
+        $requests[$i] = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10]);
       }
     }
   }
@@ -273,10 +277,29 @@ function sortByDownTime($f1, $f2)
                   break;
               }
 
+
+              if ($category!=""){
+                if ($category=="000") {
+                  for ($i=0; $i < count($requests); $i++) {if ($requests[i]->requests_category != $category)  {unset($requests[$i]);}}
+                }
+                else {
+                  for ($i=0; $i < 3; $i++) {
+                    if ($category[$i]!=0) {
+                      for ($j=0; $j < count($requests); $j++) {
+                        if ($category[$i]!=$requests[$j]->requests_category[$j]) {
+                          unset($requests[$j]);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+
               if ($own == 'on') {
                 for ($i=0; $i < count($requests); $i++) {
-                  if ($requestsFP[i]->requests_mastersID==$_SESSION['login'])
-                  {$requestsFP.push($requestsFP[i]);}
+                  if ($requestsFP[$i]->requests_mastersID==$_SESSION['login'])
+                  {$requestsFP.push($requestsFP[$i]);}
                 }
               }
               else {
@@ -287,7 +310,7 @@ function sortByDownTime($f1, $f2)
               $from = $to-10;
               for ($i=$from; $i < $to; $i++) {
                 if ($i < count($requestsFP))
-                {$requestsFP[i]->print_request();}
+                {$requestsFP[$i]->print_request();}
               }
             ?>
 
