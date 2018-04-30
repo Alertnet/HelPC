@@ -222,20 +222,20 @@ function sortByDownTime($f1, $f2)
                 </div>
                 <h5 class="card-title">Виды работ</h5>
                 <div class="form-group">
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="software"/>
+                  <div class="custom-control custom-radio" >
+                    <input class="custom-control-input" type="radio" name="category" value="100" id="software"/>
                     <label class="custom-control-label" for="software">Программное обеспечение</label>
                   </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="hardware"/>
+                  <div class="custom-control custom-radio" >
+                    <input class="custom-control-input" type="radio" name="category" value="010" id="hardware"/>
                     <label class="custom-control-label" for="hardware">Аппаратное обеспечение</label>
                   </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="network"/>
+                  <div class="custom-control custom-radio" >
+                    <input class="custom-control-input" type="radio" name="category" value="001" id="network"/>
                     <label class="custom-control-label" for="network">Сеть</label>
                   </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="other"/>
+                  <div class="custom-control custom-radio" >
+                    <input class="custom-control-input" type="radio" name="category" value="000" id="other"/>
                     <label class="custom-control-label" for="other">Прочие</label>
                   </div>
                 </div>
