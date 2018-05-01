@@ -31,9 +31,11 @@ class Request
   public $requests_cost         = "";
   public $requests_time_left    = "";
   public $clients_address       = "";
+  public $requests_id           = "";
 
-  function __construct($requests_name, $requests_description, $requests_category, $requests_clientsID, $requests_cost, $requests_time, $clients_telephone, $clients_name, $clients_address, $clients_description, $requests_mastersID)
+  function __construct($requests_name, $requests_description, $requests_category, $requests_clientsID, $requests_cost, $requests_time, $clients_telephone, $clients_name, $clients_address, $clients_description, $requests_mastersID, $requests_id)
   {
+    $this->requests_id           = $requests_id;
     $this->requests_mastersID     = $requests_mastersID;
     $this->requests_name          = $requests_name;
     $this->requests_description   = $requests_description;
@@ -52,7 +54,7 @@ class Request
   function print_request (){
     if ($this->requests_mastersID != $_SESSION['login']){
     echo '
-    <div class="col-12 mb-3 '.get_category($this->requests_category).'">
+    <div class="col-12 mb-3 '.get_category($this->requests_category).'" data-id="'.$this->requests_id.'">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
@@ -71,14 +73,14 @@ class Request
                 </div>
               </li>
             </ul>
-          </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
+          </div><a class="btn btn-outline-primary" data-action="accept" href="#" data-id="'.$this->requests_id.'"data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
         </div>
       </div>
     </div>
     ';}
     else{
       echo '
-      <div class="col-12 mb-3 '.get_category($this->requests_category).'">
+      <div class="col-12 mb-3 '.get_category($this->requests_category).'" data-id="'.$this->requests_id.'">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
@@ -98,7 +100,7 @@ class Request
                   </div>
                 </li>
               </ul>
-            </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Отказаться</a>
+            </div><a class="btn btn-outline-primary" href="#" data-id="'.$this->requests_id.'"data-action="decline" data-toggle="modal" data-target="#modal-confirm-bid">Отказаться</a>
           </div>
         </div>
       </div>
@@ -162,7 +164,7 @@ function sortByDownTime($f1, $f2)
     echo 'server erorr';
   }
 
-  $query = "SELECT `requests_name`, `requests_description`, `requests_category`, `requests_clientsID`, `requests_cost`, `requests_time`, `clients_telephone`,	`clients_name`,	`clients_address`, `clients_description`, `requests_mastersID`  FROM `requests` LEFT JOIN `clients` ON (requests_clientsID = clients_telephone) WHERE `requests_mastersID`=".$_SESSION['login']." OR `requests_mastersID`=0";
+  $query = "SELECT `requests_name`, `requests_description`, `requests_category`, `requests_clientsID`, `requests_cost`, `requests_time`, `clients_telephone`,	`clients_name`,	`clients_address`, `clients_description`, `requests_mastersID`, `requests_id`  FROM `requests` LEFT JOIN `clients` ON (requests_clientsID = clients_telephone) WHERE `requests_mastersID`=".$_SESSION['login']." OR `requests_mastersID`=0";
   $result = mysql_query($query) or die("Ошибка " . mysql_error());
   if($result)
   {
@@ -172,7 +174,7 @@ function sortByDownTime($f1, $f2)
       $requests=[];
       for ($i=0; $i < $rows; $i++) {
         $row = mysql_fetch_row($result);
-        $requests[$i] = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10]);
+        $requests[$i] = new Request($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], $row[10], $row[11]);
       }
     }
   }
@@ -260,6 +262,7 @@ function sortByDownTime($f1, $f2)
             <?php
               $requestsFP = [];
 
+
               switch ($sort) {
                 case 'sortByUpCost':
                   uasort($requests,"sortByUpCost");
@@ -314,246 +317,7 @@ function sortByDownTime($f1, $f2)
               }
             ?>
 
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось 2 часа</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Не включается компьютер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">Путилково, 24, Дом 7, к1, кв. 40 домофон 45к8112</small></p>
-                  <p class="text-muted"><i class="fa fa-user mr-2"></i><small class="card-subtitle">Наталья 8 906 058 45 62</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-0">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Отказаться</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 8 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">1800 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Тормозит компьютер, рекламные баннеры в браузере</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">проспект Мира, 86</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-1" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">2</span>
-                        <div class="collapse" id="bid-actions-1">
-                          <hr>
-                          <div>Оптимизация Windows</div>
-                          <div>Удаление вирусов</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось 4 часа</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">3000 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Установить Windows, настроить роутер, настроить принтер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Суворова, 133</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-2" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">3</span>
-                        <div class="collapse" id="bid-actions-2">
-                          <hr>
-                          <div>Установка Windows</div>
-                          <div>Настройка роутера</div>
-                          <div>Настройка принтера</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 23 часа</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Не загружается Windows</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Плеханова, 61</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-3" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-3">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 4 дня</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">1000 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Провести и обжать витую пару</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Мира, 53</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-4" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-4">
-                          <hr>
-                          <div>Провести и обжать витую пару</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 17 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">2000 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Собрать системный блок</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Бетонщиков, 1</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-5" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-5">
-                          <hr>
-                          <div>Собрать системный блок</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 10 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Выключается компьютер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Садовая, 19</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-6" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-6">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось 5 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">1200 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Перегревается системный блок</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Ленина, 164</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-7" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-7">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 10 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">400 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Вылетает iTunes</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Дзержинского, 10</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-8" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-8">
-                          <hr>
-                          <div>Установка iTunes</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 7 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Настроить принтер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Дружбы, 58</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-9" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-9">
-                          <hr>
-                          <div>Настройка принтера</div>
-                        </div>
-                      </li>
-                      <li class="list-group-item"><a class="mr-2" href="#bid-additions-9" data-toggle="collapse">Дополнения</a>
-                        <div class="collapse" id="bid-additions-9">
-                          <hr>
-                          <div>Дратути))0)</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
+
             <nav class="w-100 d-block">
               <ul class="pagination justify-content-center">
                 <li class="page-item disabled"><a class="page-link" href="#"><span>«</span></a></li>
@@ -585,8 +349,7 @@ function sortByDownTime($f1, $f2)
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
-          <p>Вы уверены, что желаете принять заявку?</p>
-          <p>С Вашего лицевого счёта будет списано 200 ₽</p>
+
         </div>
         <div class="modal-footer"><a class="btn btn-secondary" href="#" data-dismiss="modal">Отменить</a><a class="btn btn-primary" href="#">Принять</a></div>
       </div>
