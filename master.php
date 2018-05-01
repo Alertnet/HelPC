@@ -57,17 +57,17 @@ class Request
     <div class="col-12 mb-3 '.get_category($this->requests_category).'" data-id="'.$this->requests_id.'">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
+          <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось '.$this->requests_time_left.'</small>
           </div><span class="h4">
-            <div class="badge badge-warning">'.$this->requests_cost.'</div></span>
+            <div class="badge badge-warning">'.$this->requests_cost.' &#8381;</div></span>
         </div>
         <div class="card-body">
           <h5 class="card-title">'.$this->requests_name.'</h5>
           <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">'.$this->clients_address.'</small></p>
           <div class="mb-3">
             <ul class="list-group">
-              <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
-                <div class="collapse" id="bid-actions-0">
+              <li class="list-group-item"><a class="mr-2" href="#bid-'.$this->requests_id.'" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
+                <div class="collapse" id="bid-'.$this->requests_id.'">
                   <hr>
                   <div>'.$this->requests_description.'</div>
                 </div>
@@ -83,9 +83,9 @@ class Request
       <div class="col-12 mb-3 '.get_category($this->requests_category).'" data-id="'.$this->requests_id.'">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось'.$this->requests_time_left.'</small>
+            <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось '.$this->requests_time_left.'</small>
             </div><span class="h4">
-              <div class="badge badge-warning">'.$this->requests_cost.'</div></span>
+              <div class="badge badge-warning">'.$this->requests_cost.' &#8381;</div></span>
           </div>
           <div class="card-body">
             <h5 class="card-title">'.$this->requests_name.'</h5>
@@ -93,14 +93,14 @@ class Request
             <p class="text-muted"><i class="fa fa-user mr-2"></i><small class="card-subtitle">'.$this->clients_name.' '.$this->clients_telephone.'</small></p>
             <div class="mb-3">
               <ul class="list-group">
-                <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
-                  <div class="collapse" id="bid-actions-0">
+                <li class="list-group-item"><a class="mr-2" href="#bid-'.$this->requests_id.'" data-toggle="collapse">Описание заявки</a><span class="badge badge-secondary">1</span>
+                  <div class="collapse" id="bid-'.$this->requests_id.'">
                     <hr>
                     <div>'.$this->requests_description.'</div>
                   </div>
                 </li>
               </ul>
-            </div><a class="btn btn-outline-primary" href="#" data-id="'.$this->requests_id.'"data-action="decline" data-toggle="modal" data-target="#modal-confirm-bid">Отказаться</a>
+            </div><a class="btn btn-outline-danger" href="#" data-id="'.$this->requests_id.'"data-action="decline" data-toggle="modal" data-target="#modal-confirm-bid">Отказаться</a>
           </div>
         </div>
       </div>
