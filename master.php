@@ -290,7 +290,7 @@ function sortByDownTime($f1, $f2)
                   for ($i=0; $i < 3; $i++) {
                     if ($category[$i]!=0) {
                       for ($j=0; $j < count($requests); $j++) {
-                        if ($category[$i]!=$requests[$j]->requests_category[$j]) {
+                        if ($category[$i]!=$requests[$j]->requests_category[$i]) {
                           unset($requests[$j]);
                         }
                       }
@@ -308,15 +308,24 @@ function sortByDownTime($f1, $f2)
                 }
               }
               else {
-                $requestsFP=$requests;
+                for ($i=0; $i < count($requests); $i++) {
+                  if (isset($requests[$i])) {
+                    array_push($requestsFP, $requests[$i]);
+                  }
+                }
               }
 
               $to = ((int)$page)*10;
               $from = $to-10;
+              if (count($requestsFP)==0) {
+                echo "Заявок с такими параметрами нет";
+              }
+              else {
               for ($i=$from; $i < $to; $i++) {
                 if ($i < count($requestsFP))
                 {$requestsFP[$i]->print_request();}
               }
+            }
             ?>
 
 
