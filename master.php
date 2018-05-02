@@ -19,6 +19,7 @@ if (isset($_GET["category"])) {$category = $_GET["category"];}
 else {
   $category = "";
 }
+
 class Request
 {
   public $requests_mastersID    = "";
@@ -50,6 +51,9 @@ class Request
     $this->requests_time_left     = (int)(($requests_time - time())/60/60)." часов ".(($requests_time - time())/60%60)." минут";
     $this->clients_address        = $clients_address;
   }
+
+
+
 
   function print_request (){
     if ($this->requests_mastersID != $_SESSION['login']){
@@ -260,9 +264,6 @@ function sortByDownTime($f1, $f2)
           <div class="row no-gutters">
 
             <?php
-              $requestsFP = [];
-
-
               switch ($sort) {
                 case 'sortByUpCost':
                   uasort($requests,"sortByUpCost");
@@ -297,16 +298,17 @@ function sortByDownTime($f1, $f2)
                   }
                 }
               }
-
+              $requestsFP = [];
 
               if ($own == 'on') {
                 for ($i=0; $i < count($requests); $i++) {
-                  if ($requestsFP[$i]->requests_mastersID==$_SESSION['login'])
-                  {$requestsFP.push($requestsFP[$i]);}
+                  if ($requests[$i]->requests_mastersID==$_SESSION['login']) {
+                    array_push($requestsFP, $requests[$i]);
+                  }
                 }
               }
               else {
-                $requestsFP = $requests;
+                $requestsFP=$requests;
               }
 
               $to = ((int)$page)*10;
