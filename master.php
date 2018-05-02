@@ -8,6 +8,12 @@ if (!isLogin()) {
 }
   mysql_connect($HOST, $USER, $PASS) or die ("Не могу создать соединение"); //устанавливаем соединение с хостом, если не получилось завершаем скрипт с ошибкой
   mysql_select_db($DB) or die (mysql_error().' вот такая херня');  		     	//Выбор базы данных или завершение скрипта
+if (isset($_GET["logout"])) {
+  session_unset();
+  session_destroy();
+  header('Location: ./index.html');
+  exit;
+}
 if (isset($_GET["page"])) {$page = $_GET["page"];}
 else {$page = "1";}
 if (isset($_GET["sort"])) {$sort = $_GET["sort"];}
@@ -211,7 +217,7 @@ function sortByDownTime($f1, $f2)
               <div><i class="fa fa-credit-card mr-2" style="color: rgb(79, 109, 140);" data-toggle="tooltip" title="Баланс"></i><span class="text-white mr-2"><?php  echo $balance;?></span><a class="badge badge-primary" href="#">пополнить</a></div>
             </div>
           </div>
-          <div class="col-auto d-flex align-items-center"><a href="main.html" style="color: rgb(79, 109, 140);"><i class="fa fa-sign-out fa-2x" data-toggle="tooltip" title="Выйти"></i></a></div>
+          <div class="col-auto d-flex align-items-center"><a href="./master.php?logout=1" style="color: rgb(79, 109, 140);"><i class="fa fa-sign-out fa-2x" data-toggle="tooltip" title="Выйти"></i></a></div>
         </div>
       </div>
     </div>
