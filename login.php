@@ -17,9 +17,11 @@ if (isset($_POST['master_log']) && isset($_POST['master_pass'])) {
       if (count($rows)>0)
       {
             $row = mysql_fetch_row($result);
-            if (($row[0] == $_POST['master_log']) && ($row[1] == $_POST['master_pass'])) 
+            if (($row[0] == $_POST['master_log']) && ($row[1] == $_POST['master_pass']))
 			{
 				$_SESSION['login'] = $_POST['master_log'];
+        header('Location: ./master.php');
+        exit;
 			}
             else echo 'ты ввел какую-то дичь';
       }

@@ -2,7 +2,10 @@
 require_once './cfg.php';
 require_once './gl_fun.php';
 session_start();
-if (!isLogin()) die ('You have not log on');
+if (!isLogin()) {
+  header('Location: ./login.php');
+  exit;
+}
   mysql_connect($HOST, $USER, $PASS) or die ("Не могу создать соединение"); //устанавливаем соединение с хостом, если не получилось завершаем скрипт с ошибкой
   mysql_select_db($DB) or die (mysql_error().' вот такая херня');  		     	//Выбор базы данных или завершение скрипта
 if (isset($_GET["page"])) {$page = $_GET["page"];}
