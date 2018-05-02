@@ -14,6 +14,17 @@ if (isset($_GET["logout"])) {
   header('Location: ./index.html');
   exit;
 }
+if (isset($_GET["action"])) {
+  $action=$_GET["action"];
+  if ($action=="accept") {
+    $query = "UPDATE `requests` SET `requests_mastersID` = '".$_SESSION['login']."' WHERE `requests`.`requests_id` = ".$_GET['requestid'].";";
+    $result = mysql_query($query) or die("Ошибка " . mysql_error());
+  }
+  if ($action=="decline") {
+    $query = "UPDATE `requests` SET `requests_mastersID` = '0' WHERE `requests`.`requests_id` = ".$_GET['requestid'].";";
+    $result = mysql_query($query) or die("Ошибка " . mysql_error());
+  }
+}
 if (isset($_GET["page"])) {$page = $_GET["page"];}
 else {$page = "1";}
 if (isset($_GET["sort"])) {$sort = $_GET["sort"];}
