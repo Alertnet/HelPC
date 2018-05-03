@@ -249,34 +249,38 @@ function sortByDownTime($f1, $f2)
                 <h5 class="card-title">Сортировка    </h5>
                 <div class="form-group">
                   <select class="custom-select" name="sort">
-                    <option value="sortByDownCost">Стоимость &uarr;</option>
-                    <option value="sortByUpCost">Стоимость &darr;</option>
-                    <option selected value="sortByUpTime">Осталось времени &darr;</option>
-                    <option value="sortByDownTime">Осталось времени &uarr;</option>
+                    <option <?php if ($sort=="sortByDownCost") echo "selected "; ?> value="sortByDownCost">Стоимость &uarr;</option>
+                    <option <?php if ($sort=="sortByUpCost") echo "selected "; ?> value="sortByUpCost">Стоимость &darr;</option>
+                    <option <?php if ($sort=="sortByUpTime") echo "selected "; ?> value="sortByUpTime">Осталось времени &darr;</option>
+                    <option <?php if ($sort=="sortByDownTime") echo "selected "; ?> value="sortByDownTime">Осталось времени &uarr;</option>
                   </select>
                 </div>
                 <h5 class="card-title">Виды работ</h5>
                 <div class="form-group">
+				  <div class="custom-control custom-radio" >
+                    <input <?php if ($category=="") echo "checked "; ?> class="custom-control-input" type="radio" name="category" value="" id="all"/>
+                    <label class="custom-control-label" for="all">Все категории</label>
+                  </div>
                   <div class="custom-control custom-radio" >
-                    <input class="custom-control-input" type="radio" name="category" value="100" id="software"/>
+                    <input <?php if ($category=="100") echo "checked "; ?> class="custom-control-input" type="radio" name="category" value="100" id="software"/>
                     <label class="custom-control-label" for="software">Программное обеспечение</label>
                   </div>
                   <div class="custom-control custom-radio" >
-                    <input class="custom-control-input" type="radio" name="category" value="010" id="hardware"/>
+                    <input 	<?php if ($category=="010") echo "checked "; ?>class="custom-control-input" type="radio" name="category" value="010" id="hardware"/>
                     <label class="custom-control-label" for="hardware">Аппаратное обеспечение</label>
                   </div>
                   <div class="custom-control custom-radio" >
-                    <input class="custom-control-input" type="radio" name="category" value="001" id="network"/>
+                    <input <?php if ($category=="001") echo "checked "; ?>class="custom-control-input" type="radio" name="category" value="001" id="network"/>
                     <label class="custom-control-label" for="network">Сеть</label>
                   </div>
                   <div class="custom-control custom-radio" >
-                    <input class="custom-control-input" type="radio" name="category" value="000" id="other"/>
+                    <input <?php if ($category=="000") echo "checked "; ?>class="custom-control-input" type="radio" name="category" value="000" id="other"/>
                     <label class="custom-control-label" for="other">Прочие</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" name="own" id="myRequests"/>
+                    <input <?php if ($own=="on") echo "checked "; ?>class="custom-control-input" type="checkbox" name="own" id="myRequests"/>
                     <label class="custom-control-label" for="myRequests">Только мои заявки</label>
                   </div>
                 </div>
@@ -293,20 +297,19 @@ function sortByDownTime($f1, $f2)
 				echo "Для продолжения работы в личном кабинете необходимо пополнить баланс";
 				die();
 				}
-				
-				
+								
               switch ($sort) {
                 case 'sortByUpCost':
-                  uasort($requests,"sortByUpCost");
+                  usort($requests,"sortByUpCost");
                   break;
                 case 'sortByDownCost':
-                  uasort($requests,"sortByDownCost");
+                  usort($requests,"sortByDownCost");
                   break;
                 case 'sortByUpTime':
-                  uasort($requests,"sortByUpTime");
+                  usort($requests,"sortByUpTime");
                   break;
                 case 'sortByDownTSime':
-                  uasort($requests,"sortByDownTSime");
+                  usort($requests,"sortByDownTSime");
                   break;
                 default:
                   break;
