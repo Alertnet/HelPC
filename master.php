@@ -17,7 +17,12 @@ if (isset($_GET["logout"])) {
 if (isset($_GET["action"])) {
   $action=$_GET["action"];
   if ($action=="accept") {
-    $query = "UPDATE `requests` SET `requests_mastersID` = '".$_SESSION['login']."' WHERE `requests`.`requests_id` = ".$_GET['requestid'].";";
+	$query = "UPDATE `requests` SET `requests_mastersID` = '".$_SESSION['login']."' WHERE `requests`.`requests_id` = ".$_GET['requestid'].";";
+    $result = mysql_query($query) or die("Ошибка " . mysql_error());
+	$query = "SELECT `requests_cost` FROM `requests` WHERE `requests_id`=".$_GET['requestid'].";";
+	$result = mysql_query($query) or die("Ошибка " . mysql_error());
+	$cost = mysql_fetch_row($result)[0];
+	$query = "UPDATE `masters` SET `masters_balance` = `masters_balance`-".$cost." WHERE `masters`.`masters_log` = ".$_SESSION['login'].";";
     $result = mysql_query($query) or die("Ошибка " . mysql_error());
   }
   if ($action=="decline") {
@@ -284,6 +289,12 @@ function sortByDownTime($f1, $f2)
           <div class="row no-gutters">
 
             <?php
+				if ($balance<0){
+				echo "Для продолжения работы в личном кабинете необходимо пополнить баланс";
+				die();
+				}
+				
+				
               switch ($sort) {
                 case 'sortByUpCost':
                   uasort($requests,"sortByUpCost");
