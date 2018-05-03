@@ -58,6 +58,7 @@ class Request
   public $requests_time_left    = "";
   public $clients_address       = "";
   public $requests_id           = "";
+  public $forPrint              = 1;
 
   function __construct($requests_name, $requests_description, $requests_category, $requests_clientsID, $requests_cost, $requests_time, $clients_telephone, $clients_name, $clients_address, $clients_description, $requests_mastersID, $requests_id)
   {
@@ -317,38 +318,25 @@ function sortByDownTime($f1, $f2)
 
 
               if ($category!=""){
-                if ($category=="000") {
-                  for ($i=0; $i < count($requests); $i++) {if ($requests[i]->requests_category != $category)  {unset($requests[$i]);}}
-                }
-                else {
-                  for ($i=0; $i < 3; $i++) {
-                    if ($category[$i]!=0) {
-                      for ($j=0; $j < count($requests); $j++) {
-                        if ($category[$i]!=$requests[$j]->requests_category[$i]) {
-                          unset($requests[$j]);
-                        }
-                      }
-                    }
-                  }
-                }
+                  for ($i=0; $i < count($requests); $i++) {if ($requests[$i]->requests_category != $category)  {$requests[$i]->forPrint = 0; }}
               }
-              $requestsFP = [];
 
               if ($own == 'on') {
                 for ($i=0; $i < count($requests); $i++) {
-                  if ($requests[$i]->requests_mastersID==$_SESSION['login']) {
-                    array_push($requestsFP, $requests[$i]);
+                  if ($requests[$i]->requests_mastersID!=$_SESSION['login']) {
+                    $requests[$i]->forPrint = 0;
                   }
                 }
               }
-              else {
-                for ($i=0; $i < count($requests); $i++) {
-                  if (isset($requests[$i])) {
-                    array_push($requestsFP, $requests[$i]);
-                  }
-                }
-              }
-
+			$requestsFP =[];
+			for ($i=0; $i < count($requests); $i++){
+				if ($requests[$i]->forPrint == 1){
+					array_push($requestsFP, $requests[$i]);
+				}				
+			}
+			
+			  
+			  
               $to = ((int)$page)*10;
               $from = $to-10;
               if (count($requestsFP)==0) {
