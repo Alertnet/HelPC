@@ -6,6 +6,10 @@ $(function() {
   $(".bi-phone-number").mask("+7 (999) 999-99-99");
 });
 
+$(function() {
+    $(".bi-date-time").mask("99.99.99 99:99");
+});
+
 function toggleCollapse() {
   if (document.documentElement.clientWidth >= 768) {
     $('#sort').addClass('show');

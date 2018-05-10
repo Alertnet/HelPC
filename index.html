@@ -4,360 +4,152 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <link href="css/style.css" rel="stylesheet">
-    <title>HelPC - Личный Кабинет</title>
+    <title>HelPC - Цены на обслуживание</title>
   </head>
-  <body class="bg-light">
-    <div class="bg-dark">
-      <div class="container py-3">
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-light">
+        <div><a class="navbar-brand" href="index.html">Hel<span style="color: #f25f5c; text-decoration: underline;">PC</span></a>
+          <p class="d-none d-md-block">Скорая компьютерная помощь</p>
+        </div>
+        <div><span class="font-weight-bold d-none d-md-block">Наш телефон:</span><span class="lead">+7 (800) 000-00-00</span></div>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="divider-dashed"></div>
+    </div>
+    <section class="py-5">
+      <div class="container">
+        <h3 class="display-4 mb-5 text-center">Преимущества <span style="color: #f25f5c; text-decoration: underline;">для вас</span></h3>
         <div class="row justify-content-between">
-          <div class="col-auto d-flex align-items-center"><img class="rounded-circle float-left mr-3" src="img/profile_photo.jpg" alt="profile-photo" width="75px" height="75px">
-            <div><span class="text-light">Владимир Иванов</span>
-              <div style="color: rgb(79, 109, 140);"><i class="fa fa-star-o mr-2" style="color: rgb(79, 109, 140);" data-toggle="tooltip" title="Рейтинг"></i><span class="text-white">4,5</span></div>
-              <div><i class="fa fa-credit-card mr-2" style="color: rgb(79, 109, 140);" data-toggle="tooltip" title="Баланс"></i><span class="text-white mr-2">200 ₽</span><a class="badge badge-primary" href="#">пополнить</a></div>
-            </div>
+          <div class="col-md-3 text-center mb-5 mb-md-0 bg-white"><img class="w-50 mb-3" src="img/truck.svg">
+            <h5>Бесплатный выезд мастера</h5>
           </div>
-          <div class="col-auto d-flex align-items-center"><a href="main.html" style="color: rgb(79, 109, 140);"><i class="fa fa-sign-out fa-2x" data-toggle="tooltip" title="Выйти"></i></a></div>
+          <div class="col-md-3 text-center mb-5 mb-md-0 bg-white"><img class="w-50 mb-3" src="img/tools.svg">
+            <h5>Бесплатная диагностика</h5>
+          </div>
+          <div class="col-md-3 text-center mb-5 mb-md-0 bg-white"><img class="w-50 mb-3" src="img/ribbon.svg">
+            <h5>Год гарантии</h5>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
     <div class="container">
-      <div class="row align-items-start">
-        <aside class="sidebar col-md-4 pt-3 sticky-top">
-          <div class="card">
-            <div class="card-header border-bottom-0">
-              <h5 class="mb-0">Настройки<a class="float-right" href="#sort" data-toggle="collapse"><i class="text-secondary fa fa-bars"></i></a></h5>
+      <div class="divider-dashed"></div>
+    </div>
+    <section class="py-5">
+      <div class="container">
+        <h3 class="display-4 mb-5 text-center">Выгодные <span style="color: #f25f5c; text-decoration: underline;">предложения</span></h3>
+        <div class="card-deck mb-3 text-center">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Оптимизация</h4>
             </div>
-            <div class="card-body border-top collapse" id="sort">
-              <form>
-                <h5 class="card-title">Сортировка    </h5>
-                <div class="form-group">
-                  <select class="custom-select">
-                    <option>Стоимость &uarr;</option>
-                    <option>Стоимость &darr;</option>
-                    <option>Удалённость &uarr;</option>
-                    <option>Удалённость &darr;</option>
-                    <option selected>Горящие заявки</option>
-                  </select>
-                </div>
-                <h5 class="card-title">Виды работ</h5>
-                <div class="form-group">
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Диагностика"/>
-                    <label class="custom-control-label" for="Диагностика">Диагностика</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Установка ПО"/>
-                    <label class="custom-control-label" for="Установка ПО">Установка ПО</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Установка ОС"/>
-                    <label class="custom-control-label" for="Установка ОС">Установка ОС</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Оптимизация Windows"/>
-                    <label class="custom-control-label" for="Оптимизация Windows">Оптимизация Windows</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Удаление вирусов"/>
-                    <label class="custom-control-label" for="Удаление вирусов">Удаление вирусов</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Настройка интернета"/>
-                    <label class="custom-control-label" for="Настройка интернета">Настройка интернета</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Подключение ПУ"/>
-                    <label class="custom-control-label" for="Подключение ПУ">Подключение ПУ</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Восстановление данных"/>
-                    <label class="custom-control-label" for="Восстановление данных">Восстановление данных</label>
-                  </div>
-                  <div class="custom-control custom-checkbox" checked="true">
-                    <input class="custom-control-input" type="checkbox" id="Другое"/>
-                    <label class="custom-control-label" for="Другое">Другое</label>
-                  </div>
-                </div>
-                <button class="btn btn-outline-primary btn-block">Показать</button>
-              </form>
-            </div>
-          </div>
-        </aside>
-        <section class="col-md-8 py-3">
-          <div class="row no-gutters">
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось 2 часа</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Не включается компьютер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">Путилково, 24</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-0" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-0">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
+            <div class="card-body">
+              <div class="card-title">
+                <p class="h4"><span class="text-strikeout">3000</span><span class="text-warning"> 2000 Р</span></p>
               </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 8 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">1800 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Тормозит компьютер, рекламные баннеры в браузере</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">проспект Мира, 86</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-1" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">2</span>
-                        <div class="collapse" id="bid-actions-1">
-                          <hr>
-                          <div>Оптимизация Windows</div>
-                          <div>Удаление вирусов</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось 4 часа</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">3000 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Установить Windows, настроить роутер, настроить принтер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Суворова, 133</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-2" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">3</span>
-                        <div class="collapse" id="bid-actions-2">
-                          <hr>
-                          <div>Установка Windows</div>
-                          <div>Настройка роутера</div>
-                          <div>Настройка принтера</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 23 часа</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Не загружается Windows</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Плеханова, 61</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-3" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-3">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 4 дня</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">1000 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Провести и обжать витую пару</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Мира, 53</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-4" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-4">
-                          <hr>
-                          <div>Провести и обжать витую пару</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 17 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">2000 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Собрать системный блок</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Бетонщиков, 1</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-5" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-5">
-                          <hr>
-                          <div>Собрать системный блок</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 10 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Выключается компьютер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Садовая, 19</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-6" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-6">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><i class="fa fa-fire text-danger mr-2" data-toggle="tooltip" title="Горящая заявка"></i><small class="text-muted">Осталось 5 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">1200 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Перегревается системный блок</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Ленина, 164</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-7" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-7">
-                          <hr>
-                          <div>Диагностика</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 10 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">400 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Вылетает iTunes</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Дзержинского, 10</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-8" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-8">
-                          <hr>
-                          <div>Установка iTunes</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <div><small class="text-muted">Осталось 7 часов</small>
-                  </div><span class="h4">
-                    <div class="badge badge-warning">500 ₽</div></span>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Настроить принтер</h5>
-                  <p class="text-muted"><i class="fa fa-map-marker mr-2"></i><small class="card-subtitle">улица Дружбы, 58</small></p>
-                  <div class="mb-3">
-                    <ul class="list-group">
-                      <li class="list-group-item"><a class="mr-2" href="#bid-actions-9" data-toggle="collapse">Список работ</a><span class="badge badge-secondary">1</span>
-                        <div class="collapse" id="bid-actions-9">
-                          <hr>
-                          <div>Настройка принтера</div>
-                        </div>
-                      </li>
-                      <li class="list-group-item"><a class="mr-2" href="#bid-additions-9" data-toggle="collapse">Дополнения</a>
-                        <div class="collapse" id="bid-additions-9">
-                          <hr>
-                          <div>Дратути))0)</div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modal-confirm-bid">Принять</a>
-                </div>
-              </div>
-            </div>
-            <nav class="w-100 d-block">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled"><a class="page-link" href="#"><span>«</span></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">&hellip;</a></li>
-                <li class="page-item"><a class="page-link" href="#">26</a></li>
-                <li class="page-item"><a class="page-link" href="#"><span>»</span></a></li>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Установка Windows</li>
+                <li class="list-group-item">Чистка от пыли</li>
+                <li class="list-group-item">Установка базового ПО</li>
               </ul>
-            </nav>
+            </div>
+            <div class="card-footer"><a class="btn btn-primary" href="#">Заказать</a></div>
           </div>
-        </section>
-      </div>
-    </div>
-    <div class="container">
-      <footer class="sticky-footer text-center">
-        <p style="color: rgba(52, 58, 64, .3);">&copy; 2017 HelPC. All Rights Reserved.</p>
-      </footer>
-    </div>
-  </body>
-  <div class="modal fade" id="modal-confirm-bid" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body">
-          <p>Вы уверены, что желаете принять заявку?</p>
-          <p>С Вашего лицевого счёта будет списано 200 ₽</p>
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Безопасность</h4>
+            </div>
+            <div class="card-body">
+              <div class="card-title">
+                <p class="h4"><span class="text-strikeout">1500</span><span class="text-warning"> 1000 Р</span></p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Установка антивируса</li>
+                <li class="list-group-item">Установка блокировщика рекламы</li>
+              </ul>
+            </div>
+            <div class="card-footer"><a class="btn btn-primary" href="#">Заказать</a></div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Сборка ПК</h4>
+            </div>
+            <div class="card-body">
+              <div class="card-title">
+                <p class="h4"><span class="text-strikeout">2000</span><span class="text-warning"> 1500 Р</span></p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Подбор конфигурации</li>
+                <li class="list-group-item">Покупка комплектующих</li>
+                <li class="list-group-item">Сборка</li>
+              </ul>
+            </div>
+            <div class="card-footer"><a class="btn btn-primary" href="#">Заказать</a></div>
+          </div>
         </div>
-        <div class="modal-footer"><a class="btn btn-secondary" href="#" data-dismiss="modal">Отменить</a><a class="btn btn-primary" href="#">Принять</a></div>
+        <div class="text-center my-5"><a class="btn btn-outline-secondary" href="pricelist.html"><i class="fa fa-list-alt mr-2"></i><span>Цены на ремонт</span></a></div>
       </div>
+    </section>
+    <div class="container">
+      <div class="divider-dashed"></div>
     </div>
-  </div>
-  <script src="js/libs.js"></script>
-  <script src="js/scripts.js"></script>
+    <section class="py-5">
+      <div class="container">
+        <h3 class="display-4 mb-5 text-center">Проблема <span style="color: #f25f5c; text-decoration: underline;">с компьютером?</span></h3>
+        <div class="row align-items-center text-center">
+          <div class="col-md-2"><img class="d-md-none w-25 mb-3" src="img/call.svg"><img class="d-none d-md-inline-block w-50 mb-3" src="img/call.svg">
+            <p>Позвоните нам</p>
+          </div>
+          <div class="col-md-1">
+            <div class="divider-solid d-none d-md-block"></div><img class="d-md-none w-25 my-5" src="img/down-arrow.svg">
+          </div>
+          <div class="col-md-2"><img class="d-md-none w-25 mb-3" src="img/call-center.svg"><img class="d-none d-md-inline-block w-50 mb-3" src="img/call-center.svg">
+            <p>Получите консультацию</p>
+          </div>
+          <div class="col-md-1">
+            <div class="divider-solid d-none d-md-block"></div><img class="d-md-none w-25 my-5" src="img/down-arrow.svg">
+          </div>
+          <div class="col-md-2"><img class="d-md-none w-25 mb-3" src="img/clock.svg"><img class="d-none d-md-inline-block w-50 mb-3" src="img/clock.svg">
+            <p>Ожидайте мастера</p>
+          </div>
+          <div class="col-md-1">
+            <div class="divider-solid d-none d-md-block"></div><img class="d-md-none w-25 my-5" src="img/down-arrow.svg">
+          </div>
+          <div class="col-md-2"><img class="d-md-none w-25 mb-3" src="img/chat.svg"><img class="d-none d-md-inline-block w-50 mb-3" src="img/chat.svg">
+            <p>Оставьте отзыв</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <div class="divider-dashed">       </div>
+    </div>
+    <section class="py-5">
+      <div class="container">
+        <h3 class="display-4 mb-5 text-center">Оставьте <span style="color: #f25f5c; text-decoration: underline;">заявку</span></h3>
+        <form>
+          <div class="form-group w-25 mx-auto d-none d-md-block">
+            <input class="bi-phone-number form-control form-control-lg mb-2" type="text" placeholder="+7">
+            <input class="btn btn-primary btn-block btn-lg" type="submit" value="Оставить заявку">
+          </div>
+          <div class="form-group w-75 mx-auto d-md-none">
+            <input class="bi-phone-number form-control form-control-lg mb-2" type="text" placeholder="+7">
+            <input class="btn btn-primary btn-block btn-lg" type="submit" value="Оставить заявку">
+          </div>
+        </form>
+      </div>
+    </section>
+    <footer class="page-footer py-5 bg-dark text-white">
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-md-6 md-mb-3"><span class="font-weight-bold d-block">Наш телефон:</span><span class="lead">+7 (800) 000-00-00</span></div>
+          <div class="col-md-6 text-md-right"><a class="btn btn-outline-secondary" href="login.php"><i class="fa fa-sign-in fa-lg mr-2"></i><span>Вход для мастеров</span></a></div>
+        </div>
+      </div>
+    </footer>
+    <script src="js/libs.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
 </html>
