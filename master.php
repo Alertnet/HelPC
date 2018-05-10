@@ -250,10 +250,10 @@ function sortByDownTime($f1, $f2)
                 <h5 class="card-title">Сортировка    </h5>
                 <div class="form-group">
                   <select class="custom-select" name="sort">
-                    <option <?php if ($sort=="sortByDownCost") echo "selected "; ?> value="sortByDownCost">Стоимость &uarr;</option>
-                    <option <?php if ($sort=="sortByUpCost") echo "selected "; ?> value="sortByUpCost">Стоимость &darr;</option>
-                    <option <?php if ($sort=="sortByUpTime") echo "selected "; ?> value="sortByUpTime">Осталось времени &darr;</option>
-                    <option <?php if ($sort=="sortByDownTime") echo "selected "; ?> value="sortByDownTime">Осталось времени &uarr;</option>
+                    <option <?php if ($sort=="sortByDownCost") echo "selected "; ?> value="sortByDownCost">Стоимость &darr;</option>
+                    <option <?php if ($sort=="sortByUpCost") echo "selected "; ?> value="sortByUpCost">Стоимость &uarr;</option>
+                    <option <?php if ($sort=="sortByUpTime") echo "selected "; ?> value="sortByUpTime">Осталось времени &uarr;</option>
+                    <option <?php if ($sort=="sortByDownTime") echo "selected "; ?> value="sortByDownTime">Осталось времени &darr;</option>
                   </select>
                 </div>
                 <h5 class="card-title">Виды работ</h5>
